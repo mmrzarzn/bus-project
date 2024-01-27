@@ -1,0 +1,127 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static '/css/style_time.css'%}">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="header">
+    <div class="container">
+        <div class="header">
+            <div id="logo">
+                <a href="#">
+                    <img src="/static/img/logo.png" alt="">
+                </a>
+            </div>
+            <div class="icon-tile">
+                <h4>جدول زمانی خطوط شهری</h4>
+                <img src="/static/img/calendar.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="move-form">
+    <div class="container">
+        <div class="move-form">
+            <form method="post" action="{% url 'time_admin_page' %}">
+                {% csrf_token %}
+
+                <div class="form-row">
+
+                    <div class="form-sec">
+                        {{ form.start_time.label_tag }}
+                        {{ form.start_time }}
+                        {{ form.start_time.errors }}
+                    </div>
+
+                    <div class="form-sec">
+                        {{ form.origin_station.label_tag }}
+                        {{ form.origin_station }}
+                        {{ form.origin_station.errors }}
+                    </div>
+
+                    <div class="form-sec">
+                        {{ form.time_at_the_terminal.label_tag }}
+                        {{ form.time_at_the_terminal }}
+                        {{ form.time_at_the_terminal.errors }}
+                    </div>
+
+                    <div class="form-sec">
+                        {{ form.destination_station.label_tag }}
+                        {{ form.destination_station }}
+                        {{ form.destination_station.errors }}
+                    </div>
+
+
+                    <div class="form-sec">
+                        {{ form.time_of_the_next_bus.label_tag }}
+                        {{ form.time_of_the_next_bus }}
+                        {{ form.time_of_the_next_bus.errors }}
+                    </div>
+
+
+                    <div class="form-sec order-2">
+                        <button>تایید</button>
+                    </div>
+                </div>
+        </form>
+
+
+    </div>
+</div>
+</div>
+
+<div id="timing">
+    <div class="container">
+        <div class="time-row">
+            {% for cart in cartes %}
+            {% include "rase_app2/includes/carte_table.html" with cart=cart %}
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+function deleteCard(cardId) {
+  var csrfToken = getCookie('csrftoken'); // تابعی که ارزش کوکی csrftoken را برمی‌گرداند
+  fetch(`/delete_card/${cardId}/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': csrfToken
+    },
+    body: 'card_id=' + cardId
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Something went wrong');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if(data.status === 'success') {
+      alert('کارت با موفقیت حذف شد');
+      location.reload(); // برای رفرش کردن صفحه و نمایش تغییرات
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+function getCookie(name) {
+  // تابع getCookie که قبلا توضیح داده شد
+}
+</script>
+
+</body>
+</html>

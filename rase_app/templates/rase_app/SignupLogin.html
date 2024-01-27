@@ -1,0 +1,86 @@
+{% load static %}
+
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Responsive Login and Signup Form </title>
+        <link rel="stylesheet" type="" href="{% static '/css/stylelogin.css'%}">
+
+                        
+    </head>
+    <body>
+        <section class="container forms">
+            <div class="form login">
+                <div class="form-content">
+                    <header>ورود</header>
+                    <form  method="post" action="{% url 'login_page' %}">
+                         {% csrf_token %}
+
+                        <div class="field input-field">
+                            <p style="color: white">{{ login_form.email.label_tag }}</p>
+                            {{ login_form.email }}
+                             {{ login_form.email.error_messages }}
+                        </div>
+
+                        <br>
+
+                        <div class="field input-field">
+                            <p style="color: white">{{ login_form.password.label_tag }}</p>
+                                 {{ login_form.password }}
+                                 {{ login_form.password.error_messages }}
+                        </div>
+
+                        <br>
+
+                        <div class="form-link">
+                            <a href="#" class="forgot-pass">رمز خود را فراموش کردید؟</a>
+                        </div>
+                        <div class="field button-field">
+                            <button>ثبت</button>
+                        </div>
+
+                    </form>
+
+                    <div class="form-link">
+                        <span>حساب کاربری ندارید؟ <a href="{% url 'Signup_page'%}" >ثبت نام</a></span>
+                    </div>
+                </div>
+
+
+                
+            </div>
+        </section>
+        <!-- JavaScript -->
+        <script >
+             const forms = document.querySelector(".forms"),
+      pwShowHide = document.querySelectorAll(".eye-icon"),
+      links = document.querySelectorAll(".link");
+pwShowHide.forEach(eyeIcon => {
+    eyeIcon.addEventListener("click", () => {
+        let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
+        
+        pwFields.forEach(password => {
+            if(password.type === "password"){
+                password.type = "text";
+                eyeIcon.classList.replace("bx-hide", "bx-show");
+                return;
+            }
+            password.type = "password";
+            eyeIcon.classList.replace("bx-show", "bx-hide");
+        })
+        
+    })
+})      
+links.forEach(link => {
+    link.addEventListener("click", e => {
+       e.preventDefault(); //preventing form submit
+       forms.classList.toggle("show-signup");
+    })
+})
+        </script>
+    </body>
+</html>
+

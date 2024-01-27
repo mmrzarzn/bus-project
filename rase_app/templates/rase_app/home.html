@@ -1,0 +1,80 @@
+{% load static %}
+
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Responsive Page</title>
+    <link rel="stylesheet" type="" href="{% static '/css/style.css'%}">
+</head> 
+<body> 
+ 
+  <header> 
+    <img src="/static/img/logo%20(1).svg" class="logo">
+  </header> 
+ 
+  <aside> 
+    <table>
+
+
+        <tr>
+           <td><a href=" {% url 'time_page' %}">جدول  زمان بندی</a></td>
+        </tr>
+
+            {% if request.user.is_superuser %}
+            <tr>
+            <td><a href=" {% url 'time_admin_page' %}">ویژه کارمندان شهرداری </a></td>
+            </tr>
+            {% endif %}
+
+
+        <tr> 
+          <td>
+              <a href=" {% url 'login_page' %}"> ثبت نام / ورورد  </a>
+          </td>
+        </tr> 
+        <tr> 
+          <td><a href="">تماس با ما</a></td> 
+        </tr> 
+        <!-- Add more links as needed --> 
+      </table>
+        
+        
+        
+
+    <!-- Add your sidebar content here --> 
+  </aside> 
+ 
+  <main> 
+    <div class="scenter-div first-div">
+        <img src="/static/img/bus-256%201%20(1).svg" alt="">
+        <div class="title-lines">
+            <h2> سایت اتوبوس شهری</h2>
+            <p>ما خدمات مربوط به خط واحد شهری را مدیریت و اجرا می کنیم</p>
+        </div>
+    </div> 
+    <div class="sec-third">
+        <div class="center-div second-div">
+            <p>نظرسنجی</p>
+            <input type="text" class="input-feilds" placeholder="پیشنهادات و انتقادات خود را با ما در میان بگذارید">
+            <button class="save-button" onclick="saveData()">ثبت</button>
+        </div> 
+        <div class="center-div third-div">
+            <p>اطلاعات بیشتر</p>
+            <ul>
+                <li><a href="#">درباره ی کرایه ها</a></li>
+                <li><a href="#">تغییر خدمات برنامه ریزی شده</a></li>
+            </ul>
+        </div> 
+    </div>
+   
+    <div class="center-div">Center Div 4</div> 
+    
+  </main> 
+ <script>
+    function saveData(){
+        alert("نظرات شما با موفقیت ثبت شد")
+    }
+ </script>
+</body> 
+</html>
